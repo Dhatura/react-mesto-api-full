@@ -1,4 +1,4 @@
-export const BASE_URL = "https://api.mesto-datura.students.nomoredomains.icu";
+export const BASE_URL = "https://api.mesto-datura.students.nomoredomains.club";
 
 const checkResponse = (res) => {
   if (res.ok) {

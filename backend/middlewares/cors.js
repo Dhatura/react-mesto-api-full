@@ -2,10 +2,10 @@ const allowedCors = [
   'http://localhost:3000',
   'http://localhost:3001',
   'http://127.0.0.1:3000',
-  'https://mesto-datura.students.nomoredomains.icu',
-  'http://mesto-datura.students.nomoredomains.icu',
-  'https://api.mesto-datura.students.nomoredomains.icu',
-  'http://api.mesto-datura.students.nomoredomains.icu',
+  'https://mesto-datura.students.nomoredomains.club',
+  'http://mesto-datura.students.nomoredomains.club',
+  'https://api.mesto-datura.students.nomoredomains.club',
+  'http://api.mesto-datura.students.nomoredomains.club',
 ];
 
 module.exports = ((req, res, next) => {
