@@ -54,7 +54,7 @@ function Register({ onRegister }) {
       </form>
       <p className="sign__text">
         Уже зарегистрированы?
-        <Link to="/sign-in" className="sign__link">
+        <Link to="/signin" className="sign__link">
           {" "}
           Войти
         </Link>

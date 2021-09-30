@@ -19,8 +19,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
@@ -33,45 +32,49 @@ function App() {
   const [infoTooltipIcon, setInfoTooltipIcon] = React.useState("");
   const history = useHistory();
 
-  function handleCheckToken() {
-    const jwt = localStorage.getItem("token");
-    if (jwt) {
-      auth
-        .checkToken(jwt)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            setEmail(res.data.email);
-            history.push("/");
-          }
-        })
-        .catch((err) => {
-          history.push("/sign-in");
-          if (err === 400) {
-            console.log(`Ошибка: ${err} - Не передано одно из полей`);
-          } else if (err === 401) {
-            console.log(`Ошибка: ${err} - Пользователь с email не найден`);
-          }
-        });
-    }
-  }
+  // function handleCheckToken() {
+  //   const jwt = localStorage.getItem("token");
+  //   if (jwt) {
+  //     auth
+  //       .checkToken(jwt)
+  //       .then((res) => {
+  //         if (res) {
+  //           setLoggedIn(true);
+  //           setEmail(res.data.email);
+  //           history.push("/");
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         history.push("/sign-in");
+  //         if (err === 400) {
+  //           console.log(`Ошибка: ${err} - Не передано одно из полей`);
+  //         } else if (err === 401) {
+  //           console.log(`Ошибка: ${err} - Пользователь с email не найден`);
+  //         }
+  //       });
+  //   }
+  // }
 
   React.useEffect(() => {
-    handleCheckToken();
-  });
+    // handleCheckToken();
+    if (localStorage.getItem("token")) api.getCurrentUserInfo()
+    .then(() => setLoggedIn(true))
+  }, []);
 
   React.useEffect(() => {
     if (loggedIn) {
       Promise.all([api.getCurrentUserInfo(), api.getCardsInfo()])
         .then(([userData, data]) => {
           setCurrentUser(userData);
+          setEmail(userData.email);
           setCards(data);
+          history.push("/");
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [loggedIn]);
+  }, [loggedIn, history]);
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -106,7 +109,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
     api
       .changeLikeCardStatus(card._id, isLiked)
@@ -172,7 +175,7 @@ function App() {
         setStatus("Вы успешно зарегистрировались!");
         setInfoTooltipOpen(true);
         setInfoTooltipIcon(IconConfirm);
-        history.push("/sign-in");
+        history.push("/signin");
       })
       .catch((err) => {
         setStatus(`Что-то пошло не так!\nПопробуйте ещё раз.`);
@@ -211,7 +214,7 @@ function App() {
     localStorage.removeItem("token");
     setLoggedIn(false);
     setEmail("");
-    history.push("/sign-in");
+    history.push("/signin");
   }
 
   return (
@@ -220,11 +223,11 @@ function App() {
         <div className="root__container">
           <Header onSignOut={handleSignOut} email={email} />
           <Switch>
-            <Route path="/sign-in">
+            <Route path="/signin">
               <Login onLogin={handleLogin} />
             </Route>
 
-            <Route path="/sign-up">
+            <Route path="/signup">
               <Register onRegister={handleRegister} />
             </Route>
 

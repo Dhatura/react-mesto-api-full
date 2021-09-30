@@ -42,7 +42,7 @@ function Header({ onSignOut, email }) {
           >
             <p className="header__email">{email}</p>
             <Link
-              to="/sign-in"
+              to="/signin"
               className="header__logout"
               onClick={() => {
                 onSignOut();
@@ -54,17 +54,17 @@ function Header({ onSignOut, email }) {
           </div>
         </Route>
 
-        <Route path="/sign-in">
+        <Route path="/signin">
           <div className="header__entrance-container">
-            <Link to="/sign-up" className="header__entrance">
+            <Link to="/signup" className="header__entrance">
               Регистрация
             </Link>
           </div>
         </Route>
 
-        <Route path="/sign-up">
+        <Route path="/signup">
           <div className="header__entrance-container">
-            <Link to="/sign-in" className="header__entrance">
+            <Link to="/signin" className="header__entrance">
               Войти
             </Link>
           </div>

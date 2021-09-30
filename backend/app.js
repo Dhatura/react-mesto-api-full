@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
 
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
@@ -12,6 +12,9 @@ const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const NotFoundError = require('./errors/NotFoundError(404)');
 const regExp = require('./utils/regexp');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -35,10 +38,19 @@ const validateSignin = celebrate({
   }),
 });
 
-app.use(cookieParser());
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors);
+app.use(requestLogger);
+
+// не забыть удалить после ревью
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signup', validateSignup, createUser);
 app.post('/signin', validateSignin, login);
@@ -50,6 +62,8 @@ app.use('/cards', cardsRouter);
 app.use('/*', () => {
   throw new NotFoundError('Cтраница не найдена');
 });
+
+app.use(errorLogger);
 
 app.use(errors());
 app.use(errorHandler);

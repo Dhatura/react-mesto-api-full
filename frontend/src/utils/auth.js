@@ -1,4 +1,4 @@
-export const BASE_URL = "https://auth.nomoreparties.co";
+export const BASE_URL = "https://api.mesto-datura.students.nomoredomains.icu";
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -11,7 +11,7 @@ export const register = ({ email, password }) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
-      Accept: "application/json",
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -25,7 +25,7 @@ export const login = ({ email, password }) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
-      Accept: "application/json",
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -39,8 +39,9 @@ export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   }).then((res) => checkResponse(res));
 };

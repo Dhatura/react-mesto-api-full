@@ -39,7 +39,7 @@ module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .orFail(new Error('NotFound'))
     .then((card) => {
-      if (card.owner._id.toString() === req.user._id) {
+      if (card.owner.toString() === req.user._id) {
         Card.findByIdAndRemove(req.params.cardId)
           .then(() => res.status(SUCCESS_OK).send({ message: 'Карточка удалена' }));
       } else {
@@ -89,11 +89,7 @@ module.exports.dislikeCard = (req, res, next) => {
     { new: true },
   )
     .populate(['owner', 'likes'])
-    .orFail(() => {
-      const error = new Error('NotFound');
-      error.statusCode = 404;
-      throw error;
-    })
+    .orFail(new Error('NotFound'))
     .then((card) => res.status(SUCCESS_OK).send(card))
     .catch((err) => {
       if (err.name === 'CastError') {

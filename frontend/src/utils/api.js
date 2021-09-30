@@ -1,8 +1,7 @@
 class Api {
-  constructor({ serverAdress, cohortId, token }) {
-    this._serverAdress = serverAdress;
-    this._cohortId = cohortId;
-    this._token = token;
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
   }
 
   _getResponseData(res) {
@@ -12,10 +11,11 @@ class Api {
 
   //загружаем инофрмацию о пользователе с сервера
   getCurrentUserInfo() {
-    return fetch(`${this._serverAdress}/${this._cohortId}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "GET",
       headers: {
-        authorization: this._token,
-      },
+        "Authorization": `Bearer ${localStorage.getItem('token')}`,
+      }
     }).then((res) => {
       return this._getResponseData(res);
     });
@@ -23,10 +23,11 @@ class Api {
 
   //загружаем карточки с сервера
   getCardsInfo() {
-    return fetch(`${this._serverAdress}/${this._cohortId}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "GET",
       headers: {
-        authorization: this._token,
-      },
+        "Authorization": `Bearer ${localStorage.getItem('token')}`,
+      }
     }).then((res) => {
       return this._getResponseData(res);
     });
@@ -34,10 +35,10 @@ class Api {
 
   //меняем данные профиля на сервере и возвращаем данные профиля
   editUserProfile({ name, about }) {
-    return fetch(`${this._serverAdress}/${this._cohortId}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
-        authorization: this._token,
+        "Authorization": `Bearer ${localStorage.getItem('token')}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -51,10 +52,10 @@ class Api {
 
   //добавляем карточку на сервер и возвращаем ответ
   addNewCard({ name, link }) {
-    return fetch(`${this._serverAdress}/${this._cohortId}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
-        authorization: this._token,
+        "Authorization": `Bearer ${localStorage.getItem('token')}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -68,10 +69,10 @@ class Api {
 
   //удаляем карточку
   deleteCard(cardId) {
-    return fetch(`${this._serverAdress}/${this._cohortId}/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: {
-        authorization: this._token,
+        "Authorization": `Bearer ${localStorage.getItem('token')}`,
       },
     }).then((res) => {
       return this._getResponseData(res);
@@ -81,24 +82,23 @@ class Api {
   // Постановка и снятие лайка
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(
-      `${this._serverAdress}/${this._cohortId}/cards/likes/${cardId}`,
+      `${this._baseUrl}/cards/${cardId}/likes`,
       {
         method: isLiked ? "DELETE" : "PUT",
         headers: {
-          authorization: this._token,
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
-      }
-    ).then((res) => {
+      }).then((res) => {
       return this._getResponseData(res);
     });
   }
 
   //обновляем аватар пользователя
   updateAvatar({ avatar }) {
-    return fetch(`${this._serverAdress}/${this._cohortId}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: {
-        authorization: this._token,
+        "Authorization": `Bearer ${localStorage.getItem('token')}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -111,8 +111,9 @@ class Api {
 }
 
 const api = new Api({
-  serverAdress: "https://nomoreparties.co/v1",
-  cohortId: "cohort-25",
-  token: "63e4bf39-1bd7-4fd2-aabc-671c31ffa94b",
+  baseUrl: "https://api.mesto-datura.students.nomoredomains.icu",
+  headers: {
+    "Content-Type": "application/json"
+  }
 });
 export default api;
