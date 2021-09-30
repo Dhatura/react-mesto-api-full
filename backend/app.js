@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const { celebrate, Joi, errors } = require('celebrate');
-const cors = require('cors');
 
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
@@ -13,6 +12,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const NotFoundError = require('./errors/NotFoundError(404)');
 const regExp = require('./utils/regexp');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 
 require('dotenv').config();
 
