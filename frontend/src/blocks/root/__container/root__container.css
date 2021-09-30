@@ -1,0 +1,10 @@
+.root__container {
+  margin: 0 auto;
+  max-width: 880px;
+}
+
+@media (max-width: 1024px) {
+  .root__container {
+    max-width: 612px;
+  }
+}

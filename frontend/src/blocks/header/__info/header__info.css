@@ -1,0 +1,10 @@
+.header__info {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .header__info {
+    display: none;
+  }
+}

@@ -1,0 +1,7 @@
+@media (max-width: 768px) {
+  .header__logo_block-information {
+    padding-left: 30px;
+    margin-top: 27px;
+    order: 2;
+  }
+}

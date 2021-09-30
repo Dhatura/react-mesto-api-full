@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+  .header__burger-menu_close {
+    background-image: url("../../../../images/close-icon-menu.svg");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-top: 27px;
+    order: 2;
+  }
+
+  .header__burger-menu_close span {
+    display: none;
+  }
+}

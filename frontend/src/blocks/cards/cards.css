@@ -1,0 +1,9 @@
+.cards {
+  padding-bottom: 66px;
+}
+
+@media (max-width: 768px) {
+  .cards {
+    padding-bottom: 48px;
+  }
+}
