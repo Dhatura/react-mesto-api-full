@@ -16,7 +16,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const NotFoundError = require('./errors/NotFoundError(404)');
 // const regExp = require('./utils/regexp');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const requestСors = require('./middlewares/cors');
+const requestСors = require('./middlewares/cors');
 
 require('dotenv').config();
 
@@ -51,7 +51,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors());
+app.use(cors(requestСors));
 app.use(requestLogger);
 
 // не забыть удалить после ревью
