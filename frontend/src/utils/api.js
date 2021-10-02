@@ -12,6 +12,7 @@ class Api {
   //загружаем инофрмацию о пользователе с сервера
   getCurrentUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
+      credentials: "include",
       method: "GET",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -24,6 +25,7 @@ class Api {
   //загружаем карточки с сервера
   getCardsInfo() {
     return fetch(`${this._baseUrl}/cards`, {
+      credentials: "include",
       method: "GET",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -36,6 +38,7 @@ class Api {
   //меняем данные профиля на сервере и возвращаем данные профиля
   editUserProfile({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
+      credentials: "include",
       method: "PATCH",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -53,6 +56,7 @@ class Api {
   //добавляем карточку на сервер и возвращаем ответ
   addNewCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
+      credentials: "include",
       method: "POST",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -70,6 +74,7 @@ class Api {
   //удаляем карточку
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      credentials: "include",
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -84,6 +89,7 @@ class Api {
     return fetch(
       `${this._baseUrl}/cards/${cardId}/likes`,
       {
+        credentials: "include",
         method: isLiked ? "DELETE" : "PUT",
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -96,6 +102,7 @@ class Api {
   //обновляем аватар пользователя
   updateAvatar({ avatar }) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
+      credentials: "include",
       method: "PATCH",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`,

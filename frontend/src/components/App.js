@@ -32,31 +32,7 @@ function App() {
   const [infoTooltipIcon, setInfoTooltipIcon] = React.useState("");
   const history = useHistory();
 
-  // function handleCheckToken() {
-  //   const jwt = localStorage.getItem("token");
-  //   if (jwt) {
-  //     auth
-  //       .checkToken(jwt)
-  //       .then((res) => {
-  //         if (res) {
-  //           setLoggedIn(true);
-  //           setEmail(res.data.email);
-  //           history.push("/");
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         history.push("/sign-in");
-  //         if (err === 400) {
-  //           console.log(`Ошибка: ${err} - Не передано одно из полей`);
-  //         } else if (err === 401) {
-  //           console.log(`Ошибка: ${err} - Пользователь с email не найден`);
-  //         }
-  //       });
-  //   }
-  // }
-
   React.useEffect(() => {
-    // handleCheckToken();
     if (localStorage.getItem("token")) api.getCurrentUserInfo()
     .then(() => setLoggedIn(true))
   }, []);

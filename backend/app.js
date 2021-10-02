@@ -6,7 +6,6 @@ const {
   celebrate, Joi, errors, CelebrateError,
 } = require('celebrate');
 const validator = require('validator');
-const cors = require('cors');
 
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
@@ -14,9 +13,8 @@ const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const NotFoundError = require('./errors/NotFoundError(404)');
-// const regExp = require('./utils/regexp');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const requestСors = require('./middlewares/cors');
+const cors = require('./middlewares/cors');
 
 require('dotenv').config();
 
@@ -51,7 +49,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors());
+app.use(cors);
 app.use(requestLogger);
 
 // не забыть удалить после ревью
