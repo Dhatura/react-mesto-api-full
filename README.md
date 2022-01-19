@@ -31,7 +31,7 @@
 
 * требуется [Node.js](https://nodejs.org/) v12+
 
-### Frontend
+### Front-end
 
 Запуск и сборка проекта
 
@@ -41,7 +41,7 @@ $ npm run start
 $ npm run build
 ```
 
-### Backend
+### Back-end
 
 Запуск проекта
 
